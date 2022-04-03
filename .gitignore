@@ -1,3 +1,12 @@
+#Mac hidden file
+.DS_Store
+
+#VSCode file
+.VSCode
+
+#python environment
+.env
+
 #Virtual Environment
 venv/
 

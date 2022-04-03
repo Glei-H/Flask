@@ -11,5 +11,9 @@ def index():
 def mike():
     return render_template('mike.html')
 
+@app.route('/estimate')
+def mike():
+    return render_template('estimate.html')    
+
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True) #set to false when putting on azure
