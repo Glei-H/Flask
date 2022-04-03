@@ -1,6 +1,20 @@
+
+
 {% extends 'base.html' %}
 
 {% block title %} Welcome to the home page {% endblock %}
+    <h1> VPM </h1>
+    <hr>
+    <p> Estimate Volume</p>
+    <form action="/estimate" method ="POST">
+        <label for="fname">First name:</label>
+        <input type="text" id="fname" name="fname" /><br /><br />
+        <label for="lname">Last name:</label>
+        <input type="text" id="lname" name="lname" /><br /><br />
+        <label for="email">Email:</label>
+        <input type="text" id="email" name="email" /><br /><br />
+        <input type="submit" id="submit" value="Submit" />
+    </form>
 
 
 {% block body %} Hello world! {% endblock %}
