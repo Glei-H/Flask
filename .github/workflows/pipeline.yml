@@ -1,0 +1,105 @@
+name: Test Package Deploy
+on:
+  push:
+    branches:
+      - main
+  pull_request:  #?
+    branches:
+      - main   
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: "test"
+    runs-on: ubuntu-latest
+
+    steps:
+    #checkout source code
+      - uses: actions/checkout@v2
+
+      - name: Set up Python version
+        uses: actions/setup-python@v1
+        with:
+          python-version: '3.9'
+
+      #- name: Create and start virtual environment
+       # run: |
+        #  python -m venv venv
+        #  source venv/bin/activate
+      
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          python -m pip install --upgrade pip
+        
+      - name: Install PyTest
+        run: |
+          pip install pytest
+
+      - name: Run tests with PyTest
+        run: |
+          python -m pytest
+      
+     # - name: Upload artifact for deployment jobs
+       # uses: actions/upload-artifact@v2
+      #  with:
+       #   name: python-app
+      #    path: |
+       #     . 
+       #     !venv/
+
+  package: 
+    name: package
+    runs-on: ubuntu-latest
+    needs: test
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Set up Python version
+        uses: actions/setup-python@v1 #V2 on video
+        with:
+          python-version: '3.9'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          python -m pip install --upgrade pip
+
+      - name: Create BUILD directory
+        run: |
+        mkdir BUILD
+        cp -r static BUILD/static
+        cp -r templates BUILD/templates
+        cp -r app.py BUILD/app.py
+        cp -r requirements.txt BUILD/requirements.txt
+
+      - name: Upload artifact for deployment jobs
+        uses: actions/upload-artifact@v2
+        with:
+          name: python-app
+          path: |
+            ./BUILD
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    environment:
+      name: 'Production'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+
+    steps:
+      - name: Download artifact from build job
+        uses: actions/download-artifact@v2
+        with:
+          name: python-app
+          path: .
+          
+      - name: 'Deploy to Azure Web App'
+        uses: azure/webapps-deploy@v2
+        id: deploy-to-webapp
+        with:
+          app-name: 'VTMflask'
+          slot-name: 'Production'
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_79A422F06FF54DCE9815E3CAE105EDD4 }}
