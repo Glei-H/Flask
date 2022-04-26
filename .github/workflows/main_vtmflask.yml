@@ -60,4 +60,4 @@ jobs:
         with:
           app-name: 'VTMflask'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_BAFA7E50DCDE41DF812D863BD8C9C20F }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_79A422F06FF54DCE9815E3CAE105EDD4 }}
