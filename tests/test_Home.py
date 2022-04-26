@@ -83,6 +83,6 @@ def test_functionality(app, client):
    #     assert res.status_code == 200
    #     assert b"141,300" in res.data
 
-#^ unable to fix "fixture 'app' not found" error
+#"fixture 'app' not found" error?
 
        
