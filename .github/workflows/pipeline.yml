@@ -69,11 +69,11 @@ jobs:
 
       - name: Create BUILD directory
         run: |
-        mkdir BUILD
-        cp -r static BUILD/static
-        cp -r templates BUILD/templates
-        cp -r app.py BUILD/app.py
-        cp -r requirements.txt BUILD/requirements.txt
+          mkdir BUILD
+          cp -r static BUILD/static
+          cp -r templates BUILD/templates
+          cp -r app.py BUILD/app.py
+          cp -r requirements.txt BUILD/requirements.txt
 
       - name: Upload artifact for deployment jobs
         uses: actions/upload-artifact@v2
